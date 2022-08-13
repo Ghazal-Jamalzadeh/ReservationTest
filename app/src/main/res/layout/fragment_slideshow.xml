@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.slideshow.SlideshowFragment">
+
+    <EditText
+        android:id="@+id/edtEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="email"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <EditText
+        android:id="@+id/edtName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="name"
+        app:layout_constraintTop_toBottomOf="@id/edtEmail"/>
+
+    <EditText
+        android:id="@+id/edtPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="password"
+        app:layout_constraintTop_toBottomOf="@id/edtName"/>
+
+    <Button
+        android:id="@+id/btnRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="register"
+        app:layout_constraintTop_toBottomOf="@id/edtPassword"/>
+
+    <EditText
+        android:id="@+id/edtUserName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="username"
+        app:layout_constraintTop_toBottomOf="@id/btnRegister"/>
+
+    <EditText
+        android:id="@+id/edtPassword2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="pasword"
+        app:layout_constraintTop_toBottomOf="@id/edtUserName"/>
+
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="login"
+        app:layout_constraintTop_toBottomOf="@id/edtPassword2"/>
+
+    <Button
+        android:id="@+id/btnGetUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="show user info"
+        app:layout_constraintTop_toBottomOf="@id/btnLogin"/>
+
+    <TextView
+        android:id="@+id/txtUserInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/btnLogin"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
