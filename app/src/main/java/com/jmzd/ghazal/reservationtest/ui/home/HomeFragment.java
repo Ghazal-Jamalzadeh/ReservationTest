@@ -8,11 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.jmzd.ghazal.reservationtest.R;
 import com.jmzd.ghazal.reservationtest.adapters.MoviesAdapter;
 import com.jmzd.ghazal.reservationtest.databinding.FragmentHomeBinding;
 import com.jmzd.ghazal.reservationtest.models.MoviesList;
@@ -71,6 +75,17 @@ public class HomeFragment extends Fragment {
         });
 
         return root;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        binding.btn.setOnClickListener(view1 -> {
+
+        Navigation.findNavController(view).navigate(R.id.action_nav_home_to_testFragment);
+
+        });
     }
 
     @Override
