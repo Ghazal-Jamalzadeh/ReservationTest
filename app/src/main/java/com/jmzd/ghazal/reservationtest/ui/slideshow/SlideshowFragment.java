@@ -98,11 +98,16 @@ public class SlideshowFragment extends Fragment {
             call2.enqueue(new Callback<ResponseUserLogin>() {
                 @Override
                 public void onResponse(Call<ResponseUserLogin> call, Response<ResponseUserLogin> response) {
-                    assert response.body() != null;
-                    token = response.body().access_token ; 
-                    Log.d("ghazal", "access_token : "  + response.body().access_token);
-                    Log.d("ghazal", "refresh_token  : "  + response.body().refresh_token);
-                    Log.d("ghazal", "token_type : "  + response.body().token_type);
+                    try {
+                        assert response.body() != null;
+                        token = response.body().access_token ;
+                        Log.d("ghazal", "access_token : "  + response.body().access_token);
+                        Log.d("ghazal", "refresh_token  : "  + response.body().refresh_token);
+                        Log.d("ghazal", "token_type : "  + response.body().token_type);
+                    }catch (Exception e ){
+                        Log.d("ghazal", "err : " + e.getMessage());
+                    }
+
                 }
 
                 @Override
@@ -117,7 +122,7 @@ public class SlideshowFragment extends Fragment {
             body.authorization = token ;
 
          try {
-             token = "Bearer" + token ;
+             token = "Bearer " + token ;
              Call<ResponseUserRegister> call3  = apiServices.getUser(token);
              call3.enqueue(new Callback<ResponseUserRegister>() {
                  @Override
