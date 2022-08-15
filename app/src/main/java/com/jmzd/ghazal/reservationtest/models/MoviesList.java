@@ -9,6 +9,9 @@ public class MoviesList {
     @SerializedName("data")
     public ArrayList<Movie> movies = new ArrayList();
 
+    @SerializedName("metadata")
+    public Metadata metadata = new Metadata();
+
     public class Movie{
 
         @SerializedName("id")
@@ -16,6 +19,16 @@ public class MoviesList {
 
         @SerializedName("title")
         public String title;
+
+        @SerializedName("poster")
+        public String poster ;
+
+    }
+
+    public class Metadata{
+
+        @SerializedName("current_page")
+        public int current_page ;
 
     }
 

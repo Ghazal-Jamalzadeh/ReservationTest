@@ -43,15 +43,19 @@ public interface ApiServices {
     @POST("/oauth/token")
     Call<ResponseUserLogin> loginUser(@Body BodyUserLogin bodyUserLogin);
 
-//    @FormUrlEncoded
-//    @POST("v1/EmergencyRequirement.php/?op=addPatient")
-//    Call<ResponseUserLogin> addPerson(@Field("BloodGroup") String bloodgroup,
-//                                      @Field("Address") String Address,
-//                                      @Field("City") String city,
-//                                      @Field("ContactNumber") String contactnumber,
-//                                      @Field("PatientName") String name,
-//                                      @Field("Time") String Time,
-//                                      @Field("DonatedBy") String donar);
+    //https://moviesapi.ir/api/user
+    @POST("/api/user")
+    Call<ResponseUserRegister> getUser(@Header("authorization") String token);
+
+    @FormUrlEncoded
+    @POST("v1/EmergencyRequirement.php/?op=addPatient")
+    Call<JsonObject> addPerson(@Field("BloodGroup") String bloodgroup,
+                                      @Field("Address") String Address,
+                                      @Field("City") String city,
+                                      @Field("ContactNumber") String contactnumber,
+                                      @Field("PatientName") String name,
+                                      @Field("Time") String Time,
+                                      @Field("DonatedBy") String donar);
 
 
 }

@@ -16,6 +16,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.JsonObject;
 import com.jmzd.ghazal.reservationtest.R;
 import com.jmzd.ghazal.reservationtest.adapters.MoviesAdapter;
 import com.jmzd.ghazal.reservationtest.databinding.FragmentHomeBinding;
@@ -52,20 +53,25 @@ public class HomeFragment extends Fragment {
 
         //call api
         Call<MoviesList> call1 = apiServices.getMovies(1);
+
+
+        //response
         call1.enqueue(new Callback<MoviesList>() {
             @Override
             public void onResponse(Call<MoviesList> call, Response<MoviesList> response) {
                 assert response.body() != null;
+
                 for (MoviesList.Movie movie :response.body().movies) {
 
                 Log.d("ghazal", "movie: " + movie.title);
 
-                    moviesAdapter = new MoviesAdapter(getContext() , response.body());
-                    LinearLayoutManager layoutManager = new LinearLayoutManager(context, RecyclerView.VERTICAL, false);
-                    binding.recyclerView.setAdapter(moviesAdapter);
-                    binding.recyclerView.setLayoutManager(layoutManager);
-                    binding.recyclerView.setHasFixedSize(true);
                 }
+
+                moviesAdapter = new MoviesAdapter(getContext() , response.body());
+                LinearLayoutManager layoutManager = new LinearLayoutManager(context, RecyclerView.VERTICAL, false);
+                binding.recyclerView.setAdapter(moviesAdapter);
+                binding.recyclerView.setLayoutManager(layoutManager);
+                binding.recyclerView.setHasFixedSize(true);
             }
 
             @Override
