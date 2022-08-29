@@ -11,15 +11,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.jmzd.ghazal.reservationtest.databinding.RecyclerItemMoviesBinding;
 import com.jmzd.ghazal.reservationtest.models.MoviesList;
 
+import java.util.ArrayList;
+
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder> {
 
-    private MoviesList moviesList ;
+    private ArrayList<MoviesList.Movie> movies ;
     private Context context ;
 
-    public MoviesAdapter(Context context , MoviesList moviesList) {
+    public MoviesAdapter(Context context , ArrayList<MoviesList.Movie> movies ) {
 
         this.context = context ;
-        this.moviesList = moviesList ;
+        this.movies = movies ;
 
     }
 
@@ -36,13 +38,13 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull MoviesAdapter.ViewHolder holder, int position) {
 
-        holder.binding.title.setText(moviesList.movies.get(position).title);
+        holder.binding.title.setText(movies.get(position).title);
 
     }
 
     @Override
     public int getItemCount() {
-        return moviesList.movies.size();
+        return movies.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

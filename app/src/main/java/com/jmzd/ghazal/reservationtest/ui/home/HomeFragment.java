@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
@@ -24,6 +25,8 @@ import com.jmzd.ghazal.reservationtest.models.MoviesList;
 import com.jmzd.ghazal.reservationtest.server.ApiClient;
 import com.jmzd.ghazal.reservationtest.server.ApiServices;
 
+import java.util.ArrayList;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -36,9 +39,6 @@ public class HomeFragment extends Fragment {
     private Context context = getContext();
     //adapters
     private MoviesAdapter moviesAdapter ;
-    //api
-    public ApiServices apiServices ;
-
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -48,37 +48,23 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        //client
-        apiServices = ApiClient.getClient().create(ApiServices.class);
+        homeViewModel.callGetMoviesList();
 
-        //call api
-        Call<MoviesList> call1 = apiServices.getMovies(1);
-
-
-        //response
-        call1.enqueue(new Callback<MoviesList>() {
-            @Override
-            public void onResponse(Call<MoviesList> call, Response<MoviesList> response) {
-                assert response.body() != null;
-
-                for (MoviesList.Movie movie :response.body().movies) {
-
-                Log.d("ghazal", "movie: " + movie.title);
-
-                }
-
-                moviesAdapter = new MoviesAdapter(getContext() , response.body());
-                LinearLayoutManager layoutManager = new LinearLayoutManager(context, RecyclerView.VERTICAL, false);
-                binding.recyclerView.setAdapter(moviesAdapter);
-                binding.recyclerView.setLayoutManager(layoutManager);
-                binding.recyclerView.setHasFixedSize(true);
-            }
-
-            @Override
-            public void onFailure(Call<MoviesList> call, Throwable t) {
-                Log.d("ghazal", "onFailure: " + t.getMessage());
-            }
+        homeViewModel.getText().observe(getViewLifecycleOwner(), s -> {
+            Log.d("ghazalTest", "string  " + s );
         });
+
+        homeViewModel.getMoviesList().observe(getViewLifecycleOwner(), (Observer<ArrayList<MoviesList.Movie>>) movies -> {
+
+            moviesAdapter = new MoviesAdapter(getContext(), movies);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(context, RecyclerView.VERTICAL, false);
+            binding.recyclerView.setAdapter(moviesAdapter);
+            binding.recyclerView.setLayoutManager(layoutManager);
+            binding.recyclerView.setHasFixedSize(true);
+
+        }) ;
+
+
 
         return root;
     }
