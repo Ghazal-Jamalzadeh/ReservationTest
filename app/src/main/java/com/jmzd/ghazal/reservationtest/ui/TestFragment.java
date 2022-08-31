@@ -40,8 +40,10 @@ public class TestFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        //get view model
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class); //requireActivity
 
+        //inflate layout
         binding = FragmentTestBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
@@ -52,6 +54,7 @@ public class TestFragment extends Fragment {
         String amount = TestFragmentArgs.fromBundle(getArguments()).getArgTest();
         binding.txtArgs.setText(amount);
 
+        //observer
         homeViewModel.getMoviesList().observe(getViewLifecycleOwner(), (Observer<ArrayList<MoviesList.Movie>>) movies -> {
 
 //            for (int i = 0; i < movies.size() ; i++) {
