@@ -80,14 +80,16 @@ public class HomeFragment extends Fragment {
 
         binding.btn.setOnClickListener(view1 -> {
 
-            //navigation Args & bundles
+            //simple
 //        Navigation.findNavController(view).navigate(R.id.action_nav_home_to_testFragment);
 
-            HomeFragmentDirections.ActionNavHomeToTestFragment action =
-                    HomeFragmentDirections.actionNavHomeToTestFragment();
-            action.setArgTest("test test test.....");
-            Navigation.findNavController(view).navigate(action);
+            // args
+//            HomeFragmentDirections.ActionNavHomeToTestFragment action =
+//                    HomeFragmentDirections.actionNavHomeToTestFragment();
+//            action.setArgTest("test test test.....");
+//            Navigation.findNavController(view).navigate(action);
 
+            //bundle
             Bundle bundle = new Bundle();
             bundle.putString("link", "google.com");
             Navigation.findNavController(view).navigate(R.id.action_nav_home_to_testFragment, bundle);
