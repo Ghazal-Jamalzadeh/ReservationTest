@@ -30,5 +30,10 @@
         android:id="@+id/testFragment"
         android:name="com.jmzd.ghazal.reservationtest.ui.TestFragment"
         android:label="fragment_test"
-        tools:layout="@layout/fragment_test" />
+        tools:layout="@layout/fragment_test" >
+        <argument
+            android:name="argTest"
+            app:argType="string"
+            android:defaultValue="ghazal" />
+    </fragment>
 </navigation>

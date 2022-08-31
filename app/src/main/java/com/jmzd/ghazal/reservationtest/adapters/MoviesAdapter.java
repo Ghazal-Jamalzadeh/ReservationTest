@@ -43,6 +43,11 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
     }
 
     @Override
+    public int getItemViewType(int position) {
+        return position ; 
+    }
+
+    @Override
     public int getItemCount() {
         return movies.size();
     }

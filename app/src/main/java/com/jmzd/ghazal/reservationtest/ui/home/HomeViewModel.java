@@ -5,13 +5,9 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.jmzd.ghazal.reservationtest.adapters.MoviesAdapter;
 import com.jmzd.ghazal.reservationtest.models.MoviesList;
 import com.jmzd.ghazal.reservationtest.repository.HomeRepository;
-import com.jmzd.ghazal.reservationtest.utils.Tools;
 
 import java.util.ArrayList;
 
@@ -21,18 +17,22 @@ import retrofit2.Response;
 
 public class HomeViewModel extends ViewModel {
 
-    private final MutableLiveData<String> mText;
-    public MutableLiveData<ArrayList<MoviesList.Movie>> moviesListLiveData = new MutableLiveData<>() ;
+    private static final String TAG = "ghazalTest";
+    public int counter = 0 ;
+    private MutableLiveData<Integer> mText = new MutableLiveData<>();
+    public MutableLiveData<ArrayList<MoviesList.Movie>> moviesListLiveData ;
+    private MutableLiveData<Boolean> loading = new MutableLiveData<>() ;
+    HomeRepository homeRepository = new HomeRepository() ;
 
-    public HomeViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is home fragment");
+
+    public void addNumber(){
+        counter ++ ;
+        mText.setValue(counter);
     }
 
     public void callGetMoviesList(){
 
-        HomeRepository homeRepository = new HomeRepository() ;
-
+        loading.setValue(true);
         //call api
         Call<MoviesList> call1 =  homeRepository.callMoviesApi();
 
@@ -42,31 +42,40 @@ public class HomeViewModel extends ViewModel {
             public void onResponse(Call<MoviesList> call, Response<MoviesList> response) {
                 assert response.body() != null;
 
-                Log.d("ghazalTest", "onResponse: size  " + response.body().movies.size());
-
-                for (MoviesList.Movie movie :response.body().movies) {
-
-                    Log.d("ghazalTest", "movie: " + movie.title);
-
-                }
-
                 moviesListLiveData.setValue(response.body().movies);
+                loading.setValue(false);
 
             }
 
             @Override
             public void onFailure(Call<MoviesList> call, Throwable t) {
-                Log.d("ghazal", "onFailure: " + t.getMessage());
+
+                loading.setValue(false);
             }
         });
 
     }
 
-    public LiveData<ArrayList<MoviesList.Movie>> getMoviesList (){
-        return moviesListLiveData ;
+    public LiveData<Boolean> getLooading (){
+        return loading ;
     }
 
-    public LiveData<String> getText() {
+//    public LiveData<ArrayList<MoviesList.Movie>> getMoviesList (){
+//        return moviesListLiveData ;
+//    }
+
+    public LiveData<Integer> getText() {
         return mText;
+    }
+
+    public LiveData<ArrayList<MoviesList.Movie>> getMoviesList() {
+        Log.d(TAG, "getMoviesList called  ");
+        if (moviesListLiveData == null) {
+            moviesListLiveData = new MutableLiveData<>() ;
+            //call api
+            callGetMoviesList();
+            Log.d(TAG, " api called  ");
+        }
+        return moviesListLiveData;
     }
 }

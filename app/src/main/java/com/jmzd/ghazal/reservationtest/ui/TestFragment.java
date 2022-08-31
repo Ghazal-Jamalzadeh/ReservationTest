@@ -1,66 +1,90 @@
 package com.jmzd.ghazal.reservationtest.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.jmzd.ghazal.reservationtest.R;
+import com.jmzd.ghazal.reservationtest.adapters.MoviesAdapter;
+import com.jmzd.ghazal.reservationtest.databinding.FragmentHomeBinding;
+import com.jmzd.ghazal.reservationtest.databinding.FragmentTestBinding;
+import com.jmzd.ghazal.reservationtest.models.MoviesList;
+import com.jmzd.ghazal.reservationtest.ui.home.HomeViewModel;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link TestFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+
 public class TestFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    //binding
+    private FragmentTestBinding binding;
+    //context
+    private Context context = getContext();
+    //adapters
+    private MoviesAdapter moviesAdapter ;
+    //ViewModel
+    HomeViewModel homeViewModel ;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class); //requireActivity
 
-    public TestFragment() {
-        // Required empty public constructor
-    }
+        binding = FragmentTestBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment TestFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static TestFragment newInstance(String param1, String param2) {
-        TestFragment fragment = new TestFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+        //get bundle
+        binding.txtBundle.setText(getArguments().getString("link"));
+
+        //get arguments
+        String amount = TestFragmentArgs.fromBundle(getArguments()).getArgTest();
+        binding.txtArgs.setText(amount);
+
+        homeViewModel.getMoviesList().observe(getViewLifecycleOwner(), (Observer<ArrayList<MoviesList.Movie>>) movies -> {
+
+//            for (int i = 0; i < movies.size() ; i++) {
+
+            Log.d("ghazalTest", "Test Fragment : " + 0 + ":" + movies.get(0).title);
+
+//            }
+
+        }) ;
+
+
+
+        return root;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        binding.txt.setText(String.valueOf(homeViewModel.counter));
+
+        homeViewModel.getText().observe(getViewLifecycleOwner(), integer -> binding.txt.setText(String.valueOf(integer)));
+
+        binding.btn.setOnClickListener(view1 -> {
+
+         homeViewModel.addNumber() ;
+
+        });
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_test, container, false);
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }

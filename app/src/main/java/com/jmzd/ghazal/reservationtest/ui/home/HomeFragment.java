@@ -1,5 +1,6 @@
 package com.jmzd.ghazal.reservationtest.ui.home;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,6 +26,7 @@ import com.jmzd.ghazal.reservationtest.databinding.FragmentHomeBinding;
 import com.jmzd.ghazal.reservationtest.models.MoviesList;
 import com.jmzd.ghazal.reservationtest.server.ApiClient;
 import com.jmzd.ghazal.reservationtest.server.ApiServices;
+import com.jmzd.ghazal.reservationtest.ui.TestFragment;
 
 import java.util.ArrayList;
 
@@ -43,26 +46,28 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         HomeViewModel homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+                new ViewModelProvider(this).get(HomeViewModel.class); //requireActivity
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        homeViewModel.callGetMoviesList();
-
-        homeViewModel.getText().observe(getViewLifecycleOwner(), s -> {
-            Log.d("ghazalTest", "string  " + s );
-        });
-
         homeViewModel.getMoviesList().observe(getViewLifecycleOwner(), (Observer<ArrayList<MoviesList.Movie>>) movies -> {
 
-            moviesAdapter = new MoviesAdapter(getContext(), movies);
+           moviesAdapter = new MoviesAdapter(getContext(), movies);
             LinearLayoutManager layoutManager = new LinearLayoutManager(context, RecyclerView.VERTICAL, false);
             binding.recyclerView.setAdapter(moviesAdapter);
             binding.recyclerView.setLayoutManager(layoutManager);
             binding.recyclerView.setHasFixedSize(true);
 
         }) ;
+
+        homeViewModel.getLooading().observe(getViewLifecycleOwner(), aBoolean -> {
+            if (aBoolean){
+                binding.progressCircular.setVisibility(View.VISIBLE);
+            }else {
+                binding.progressCircular.setVisibility(View.GONE);
+            }
+        });
 
 
 
@@ -75,7 +80,17 @@ public class HomeFragment extends Fragment {
 
         binding.btn.setOnClickListener(view1 -> {
 
-        Navigation.findNavController(view).navigate(R.id.action_nav_home_to_testFragment);
+            //navigation Args & bundles
+//        Navigation.findNavController(view).navigate(R.id.action_nav_home_to_testFragment);
+
+            HomeFragmentDirections.ActionNavHomeToTestFragment action =
+                    HomeFragmentDirections.actionNavHomeToTestFragment();
+            action.setArgTest("test test test.....");
+            Navigation.findNavController(view).navigate(action);
+
+            Bundle bundle = new Bundle();
+            bundle.putString("link", "google.com");
+            Navigation.findNavController(view).navigate(R.id.action_nav_home_to_testFragment, bundle);
 
         });
     }
