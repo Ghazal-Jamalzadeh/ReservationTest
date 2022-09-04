@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.jmzd.ghazal.reservationtest.databinding.RecyclerItemMoviesBinding;
 import com.jmzd.ghazal.reservationtest.models.MoviesList;
 
@@ -39,6 +40,8 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
     public void onBindViewHolder(@NonNull MoviesAdapter.ViewHolder holder, int position) {
 
         holder.binding.title.setText(movies.get(position).title);
+        Glide.with(context).load(movies.get(position).poster).into(holder.binding.poster);
+
 
     }
 

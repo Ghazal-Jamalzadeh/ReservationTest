@@ -24,6 +24,7 @@ import com.jmzd.ghazal.reservationtest.R;
 import com.jmzd.ghazal.reservationtest.adapters.MoviesAdapter;
 import com.jmzd.ghazal.reservationtest.databinding.FragmentHomeBinding;
 import com.jmzd.ghazal.reservationtest.models.MoviesList;
+import com.jmzd.ghazal.reservationtest.models.ResponseCoinCap;
 import com.jmzd.ghazal.reservationtest.server.ApiClient;
 import com.jmzd.ghazal.reservationtest.server.ApiServices;
 import com.jmzd.ghazal.reservationtest.ui.TestFragment;
@@ -51,6 +52,12 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+//        homeViewModel.getCoinCap().observe(getViewLifecycleOwner(), new Observer<ResponseCoinCap>() {
+//            @Override
+//            public void onChanged(ResponseCoinCap responseCoinCap) {
+//                Log.d("ghazalTest", "onChanged: " + responseCoinCap.data.get(0).symbol);
+//            }
+//        });
         homeViewModel.getMoviesList().observe(getViewLifecycleOwner(), (Observer<ArrayList<MoviesList.Movie>>) movies -> {
 
            moviesAdapter = new MoviesAdapter(getContext(), movies);

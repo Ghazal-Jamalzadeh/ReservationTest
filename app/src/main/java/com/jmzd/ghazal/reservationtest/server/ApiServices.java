@@ -6,6 +6,7 @@ import com.jmzd.ghazal.reservationtest.models.BodyUserLogin;
 import com.jmzd.ghazal.reservationtest.models.BodyUserRegister;
 import com.jmzd.ghazal.reservationtest.models.Genre;
 import com.jmzd.ghazal.reservationtest.models.MoviesList;
+import com.jmzd.ghazal.reservationtest.models.ResponseCoinCap;
 import com.jmzd.ghazal.reservationtest.models.ResponseUserLogin;
 import com.jmzd.ghazal.reservationtest.models.ResponseUserRegister;
 
@@ -27,6 +28,10 @@ public interface ApiServices {
     //https://moviesapi.ir/api/v1/movies?page=1
     @GET("/api/v1/movies?")
     Call<MoviesList> getMovies(@Query("page") int page);
+
+    //https://api.coincap.io/v2/assets
+    @GET("/v2/assets")
+    Call<ResponseCoinCap> getCoinCap();
 
     //https://moviesapi.ir/api/v1/genres
     @GET("/api/v1/genres")
@@ -56,6 +61,8 @@ public interface ApiServices {
                                       @Field("PatientName") String name,
                                       @Field("Time") String Time,
                                       @Field("DonatedBy") String donar);
+
+
 
 
 }

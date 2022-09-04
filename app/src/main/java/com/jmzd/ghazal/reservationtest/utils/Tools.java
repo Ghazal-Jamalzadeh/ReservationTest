@@ -7,7 +7,7 @@ public class Tools {
 
     private static ApiServices apiServices = null ;
 
-    public static ApiServices createApiServices (){
+    public static ApiServices getApiServicesInstance (){
 
         if (apiServices == null ){
         //client

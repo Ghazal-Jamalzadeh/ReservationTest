@@ -12,23 +12,38 @@ public class MoviesList {
     @SerializedName("metadata")
     public Metadata metadata = new Metadata();
 
-    public class Movie{
+    public class Movie {
 
         @SerializedName("id")
-        public String id;
+        public String id = "";
 
         @SerializedName("title")
-        public String title;
+        public String title = "";
 
         @SerializedName("poster")
-        public String poster ;
+        public String poster ="";
+
+        @SerializedName("year")
+        public String year = "";
+
+        @SerializedName("country")
+        public String country= "";
+
+        @SerializedName("imdb_rating")
+        public String imdb_rating = "";
+
+        @SerializedName("genres")
+        public ArrayList<String> genres = new ArrayList<>();
+
+        @SerializedName("images")
+        public ArrayList<String> images = new ArrayList<>();
 
     }
 
-    public class Metadata{
+    public class Metadata {
 
         @SerializedName("current_page")
-        public int current_page ;
+        public int current_page;
 
     }
 
