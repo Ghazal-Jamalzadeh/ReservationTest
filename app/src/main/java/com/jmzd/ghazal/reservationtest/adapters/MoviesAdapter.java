@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.jmzd.ghazal.reservationtest.databinding.RecyclerItemMoviesBinding;
 import com.jmzd.ghazal.reservationtest.models.MoviesList;
 
@@ -39,8 +40,20 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull MoviesAdapter.ViewHolder holder, int position) {
 
+        Glide.with(context)
+                .load(movies.get(position).poster)
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(holder.binding.poster);
         holder.binding.title.setText(movies.get(position).title);
-        Glide.with(context).load(movies.get(position).poster).into(holder.binding.poster);
+        holder.binding.year.setText(movies.get(position).year);
+
+        StringBuilder stringBuilder = new StringBuilder() ;
+        for (String genre: movies.get(position).genres) {
+
+            stringBuilder.append(genre) ;
+            stringBuilder.append(" ");
+        }
+        holder.binding.genres.setText(stringBuilder);
 
 
     }

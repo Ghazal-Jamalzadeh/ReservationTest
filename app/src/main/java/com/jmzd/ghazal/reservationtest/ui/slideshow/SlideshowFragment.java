@@ -6,26 +6,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-
-import com.jmzd.ghazal.reservationtest.adapters.GenresAdapter;
-import com.jmzd.ghazal.reservationtest.databinding.FragmentGalleryBinding;
 import com.jmzd.ghazal.reservationtest.databinding.FragmentSlideshowBinding;
 import com.jmzd.ghazal.reservationtest.models.BodyGetUser;
 import com.jmzd.ghazal.reservationtest.models.BodyUserLogin;
 import com.jmzd.ghazal.reservationtest.models.BodyUserRegister;
-import com.jmzd.ghazal.reservationtest.models.Genre;
 import com.jmzd.ghazal.reservationtest.models.ResponseUserLogin;
 import com.jmzd.ghazal.reservationtest.models.ResponseUserRegister;
 import com.jmzd.ghazal.reservationtest.server.ApiClient;
 import com.jmzd.ghazal.reservationtest.server.ApiServices;
-
-import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -99,11 +90,12 @@ public class SlideshowFragment extends Fragment {
                 @Override
                 public void onResponse(Call<ResponseUserLogin> call, Response<ResponseUserLogin> response) {
                     try {
-                        assert response.body() != null;
+                        if (response.body() != null){
                         token = response.body().access_token ;
                         Log.d("ghazal", "access_token : "  + response.body().access_token);
                         Log.d("ghazal", "refresh_token  : "  + response.body().refresh_token);
                         Log.d("ghazal", "token_type : "  + response.body().token_type);
+                        }
                     }catch (Exception e ){
                         Log.d("ghazal", "err : " + e.getMessage());
                     }
@@ -133,6 +125,7 @@ public class SlideshowFragment extends Fragment {
 
                  @Override
                  public void onFailure(Call<ResponseUserRegister> call, Throwable t) {
+                     Log.d("ghazal", "onFailure : get user error :  " +t.getMessage());
 
                  }
              });

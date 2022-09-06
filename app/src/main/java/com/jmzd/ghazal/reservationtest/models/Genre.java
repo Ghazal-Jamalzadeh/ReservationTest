@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
     public class Genre {
 
         @SerializedName("id")
-        public String id;
+        public int id = 0;
 
         @SerializedName("name")
         public String name;

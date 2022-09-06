@@ -21,6 +21,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiServices {
@@ -28,6 +29,10 @@ public interface ApiServices {
     //https://moviesapi.ir/api/v1/movies?page=1
     @GET("/api/v1/movies?")
     Call<MoviesList> getMovies(@Query("page") int page);
+
+    //https://moviesapi.ir/api/v1/movies/{movie_id}
+//    @GET("/api/v1/movies/{movie_id}")
+//    Call<ResponseUserLogin> getMovieById(@Path("movie_id") int id ) ;
 
     //https://api.coincap.io/v2/assets
     @GET("/v2/assets")
